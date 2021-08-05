@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Album Listings{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+{% block content %}
+    <div class="bg-gray-100 pt-8 text-gray-900 tracking-wider leading-normal">
+    <div class="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+        <table id="albums" class="table table-striped table-bordered" style="width:100%" data-server-side="true" data-ajax="/api/albums/?format=datatables">
+          <thead>
+            <tr>
+              <th data-data="id">#</th>
+              <th data-data="cover_image">Album Art</th>
+                <th data-data="title">Title</th>
+                <th data-data="artists">Artists</th>
+                <th data-data="labels">Labels</th>
+              <th data-data="year">Year</th>
+            </tr>
+          </thead>
+        </table>
+    </div>
+  </div>
+{% endblock %}
+{% block scripts %}
+      <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+      <script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+      <script>
+          $(document).ready(function() {
+              $('#albums').DataTable({
+                  searching: true,
+                  ordering:  true,
+                  paging: true,
+                  pageLength: 10,
+                  columns: [
+                      {'data': 'id',
+                          'render': function (data, type, row, meta){
+                              return '<a href="/albums/' + data + '">View</a>';
+                          }
+                      },
+                      {'data': 'cover_image',
+                          'render': function (data, type, row, meta){
+                              return '<img src="' + data + '" width="45px">';
+                          }
+                      },
+                      {'data': 'title'},
+                      {'data': 'artists'},
+                      {'data': 'labels'},
+                      {'data': 'year'}
+                  ]
+                });
+          });
+      </script>
+{% endblock %}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    {% block styles %}{% endblock %}
+</head>
+<body class="bg-gray-100">
+    <nav class="font-sans flex flex-col text-center sm:flex-row sm:text-left sm:justify-between py-2 px-6 bg-white shadow sm:items-baseline w-full">
+      <div class="mb-2 sm:mb-0">
+        <a href="{% url 'album-listing' %}" class="text-2xl no-underline text-grey-darkest hover:text-blue-dark">Discogs</a>
+      </div>
+      <div>
+        {% if user.is_authenticated %}
+          Logged in as <span class="font-bold">{{ user.username }}</span>!
+          <a href="{% url 'logout' %}" class="text-lg no-underline text-indigo-500 hover:text-blue-dark ml-2">Logout</a>
+        {% else %}
+          <a href="{% url 'logout' %}" class="text-lg text-indigo-500 no-underline hover:text-blue-dark ml-2">Login</a>
+        {% endif %}
+      </div>
+    </nav>
+  <main>
+    {% block content %}{% endblock %}
+    {% block scripts %}{% endblock %}
+  </main>
+</body>
+</html>

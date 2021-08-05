@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Album Detail{% endblock %}
+{% block content %}
+    <div class="bg-gray-100 pt-8 text-gray-900 tracking-wider leading-normal">
+        <div class="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2">
+            <div class="flex flex-col my-2 text-indigo-500">
+                <a href="{% url 'album-listing' %}">< Back to albums</a>
+            </div>
+            <div class="detail border-2 shadow-lg bg-white">
+                <div class="flex">
+                    <img class="flex flex-col w-3/5 border-r-4" src="{{ object.cover_image }}">
+                    <div class="flex flex-col ml-4 px-2 pt-4">
+                        <h2 class="text-2xl text-red-600 font-bold border-b-2 pb-2 mb-2">{{ object.title }}</h2>
+                        <p class=""><span class="text-xl font-bold ">{{ object.artists.all|join:', ' }}</span></p>
+                        <p class=""><span class="text-lg text-indigo-600 mb-2">{{ object.labels.all|join:', ' }}</span></p>
+                        <p class=""><span class="text-lg">{{ object.genres.all|join:', ' }}</span></p>
+                        <p>{{ object.year }}</p>
+                        <p>#{{ object.catalog_number }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+{% endblock %}

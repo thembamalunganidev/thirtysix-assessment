@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  redis:
+    image: "redis:alpine"
+  db:
+    image: postgres
+    env_file:
+      - ./vars/.db.env
+  web:
+    build: .
+    restart: always
+    command: >
+        bash -c "python manage.py migrate
+        && python manage.py createsuperuser --noinput
+        && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./vars/.web.env
+      - ./vars/.db.env
+    depends_on:
+      - db
+
+  huey:
+    restart: always
+    build:
+      context: .
+    command: python manage.py run_huey
+    env_file:
+      - ./vars/.huey.env
+      - ./vars/.db.env
+    depends_on:
+      - db
+      - redis
+      - web

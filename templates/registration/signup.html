@@ -1,0 +1,33 @@
+{%  extends 'registration/base.html' %}
+{% block content %}
+    <h1 class="font-bold text-center text-2xl mb-5">Sign Up</h1>
+    <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
+            <form class="px-5 py-7" action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                <input type="text" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                       placeholder="Username / Email" name="username" id="id_username"/>
+                <input type="password" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                       placeholder="Password" name="password1" id="id_password1"/>
+                <input type="password" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                       placeholder="Confirm password" name="password2" id="id_password2"/>
+                {% if form.errors %}
+                    <ul class="text-red-600 mb-6">
+                        {% for error in form.errors.values %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <button type="submit"
+                        class="bg-blue-500 focus:bg-blue-700 focus:ring-4 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
+                    <span class="inline-block mr-2">Sign up</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                         class="w-4 h-4 inline-block">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </button>
+                <p class="mt-4 text-gray-600">Already have a account? <a class="text-indigo-500" href="{% url 'login' %}">Sign In</a></p>
+            </form>
+        </div>
+    </div>
+{%  endblock %}
